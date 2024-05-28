@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Облік надходження товарів</title>
+    <script>
+        function updateRow(row) {
+            var qty = prompt("Введіть кількість", row.cells[1].innerHTML);
+            var price = prompt("Введіть ціну", row.cells[2].innerHTML);
+            if (qty !== null && price !== null) {
+                row.cells[1].innerHTML = qty;
+                row.cells[2].innerHTML = price;
+                row.cells[3].innerHTML = qty * price;
+                updateTotal();
+            }
+        }
+        
+        function updateTotal() {
+            var table = document.getElementById("productTable");
+            var totalQty = 0;
+            var totalCost = 0;
+            for (var i = 1; i < table.rows.length - 1; i++) {
+                totalQty += parseFloat(table.rows[i].cells[1].innerHTML);
+                totalCost += parseFloat(table.rows[i].cells[3].innerHTML);
+            }
+            document.getElementById("totalQtyCell").innerHTML = totalQty.toFixed(2);
+            document.getElementById("totalCostCell").innerHTML = totalCost.toFixed(2);
+        }
+    </script>
+</head>
+<body onload="updateTotal()">
+    <h1 align="center">Облік надходження товарів</h1>
+    <table id="productTable" border="1">
+        <tr>
+            <th>Товар</th>
+            <th>Кількість</th>
+            <th>Ціна</th>
+            <th>Вартість</th>
+        </tr>
+        <tr onclick="updateRow(this)">
+            <td>Товар 1</td>
+            <td>10</td>
+            <td>5.00</td>
+            <td>50.00</td>
+        </tr>
+        <tr onclick="updateRow(this)">
+            <td>Товар 2</td>
+            <td>20</td>
+            <td>3.50</td>
+            <td>70.00</td>
+        </tr>
+        <tr onclick="updateRow(this)">
+            <td>Товар 3</td>
+            <td>15</td>
+            <td>7.00</td>
+            <td>105.00</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">Всього кількість:</td>
+            <td id="totalQtyCell"></td>
+            <td id="totalCostCell"></td>
+        </tr>
+    </table>
+</body>
+</html>

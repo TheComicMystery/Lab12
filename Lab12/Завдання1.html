@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Таблиця тригонометричної функції</title>
+    <meta charset="UTF-8">
+    <script>
+        function isNumb(fld) {
+            T = fld.value;
+            for (i = 0; i < t.length; i++) {
+                var ch = t.charAt(i);
+                if ((ch < "0" || ch > "9") && !(ch == "," || ch == ".")) {
+                    alert("Не цифра");
+                    fld.focus();
+                    fld.select();
+                    return false;
+                }
+            }
+            return true;
+        }
+        function createTable() {
+            var func = document.getElementById("func").value;
+            var start = parseFloat(document.getElementById("start").value);
+            var end = parseFloat(document.getElementById("end").value);
+            var step = parseFloat(document.getElementById("step").value);
+
+            var win = window.open("", "", "width=500,height=400");
+            win.document.write("<html><head><title>Таблиця тригонометричної функції</title><meta charset='UTF-8'></head><body>");
+            win.document.write("<table border='1'>");
+            win.document.write("<tr><th>Кут в градусах</th><th>Кут в радіанах</th><th>" + func + "</th></tr>");
+
+            var angle = start;
+            while (angle <= end) {
+                var radian = angle * Math.PI / 180;
+                var value;
+                switch (func) {
+                    case "sin":
+                        value = Math.sin(radian);
+                        break;
+                    case "cos":
+                        value = Math.cos(radian);
+                        break;
+                    case "tg":
+                        value = Math.tan(radian);
+                        break;
+                }
+                win.document.write("<tr><td>" + angle + "</td><td>" + radian.toFixed(4) + "</td><td>" + value.toFixed(4) + "</td></tr>");
+                angle += step;
+            }
+            win.document.write("</table>");
+            win.document.write("</body></html>");
+        }
+    </script>
+</head>
+<body>
+    <h1 align="center">Таблиця тригонометричної функції</h1>
+    <p>Функція: <select id="func">
+        <option value="sin">sin</option>
+        <option value="cos">cos</option>
+        <option value="tg">tg</option>
+    </select></p>
+    <p>Початковий кут: <input type="text" id="start" onchange="isNumb(this)"> градусів</p>
+    <p>Кінцевий кут: <input type="text" id="end" onchange="isNumb(this)"> градусів</p>
+    <p>Крок: <input type="text" id="step" onchange="isNumb(this)"> градусів</p>
+    <p><input type="button" value="Обчислити" onclick="createTable()"></p>
+</body>
+</html>
